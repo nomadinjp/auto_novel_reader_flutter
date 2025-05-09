@@ -9,9 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  # epub
-  epubx:
-    path: plugins/epubx-4.0.0
   image: ^3.3.0
   # 网络请求
   chopper: ^8.0.1+1
@@ -54,6 +51,7 @@ dependencies:
   url_launcher: ^6.3.0
   package_info_plus: ^8.0.2
   wakelock_plus: ^1.2.8
+  downloadsfolder: ^1.1.0
   
 dev_dependencies:
   flutter_test:
