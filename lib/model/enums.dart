@@ -108,7 +108,6 @@ enum TranslationSource {
 }
 
 enum ReadType {
-  epub,
   web,
   none,
 }
@@ -128,7 +127,6 @@ enum NovelType {
 enum DownloadStatus {
   redirecting,
   downloading,
-  parsing,
   failed,
   succeed,
   none,

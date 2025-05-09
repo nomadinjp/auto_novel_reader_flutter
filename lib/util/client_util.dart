@@ -4,10 +4,8 @@ import 'package:auto_novel_reader_flutter/bloc/comment/comment_cubit.dart';
 import 'package:auto_novel_reader_flutter/bloc/config/config_cubit.dart';
 import 'package:auto_novel_reader_flutter/bloc/favored_cubit/favored_cubit.dart';
 import 'package:auto_novel_reader_flutter/bloc/download_cubit/download_cubit.dart';
-import 'package:auto_novel_reader_flutter/bloc/epub_viewer/epub_viewer_bloc.dart';
 import 'package:auto_novel_reader_flutter/bloc/global/global_bloc.dart';
 import 'package:auto_novel_reader_flutter/bloc/history/history_cubit.dart';
-import 'package:auto_novel_reader_flutter/bloc/local_file/local_file_cubit.dart';
 import 'package:auto_novel_reader_flutter/bloc/novel_rank/novel_rank_bloc.dart';
 import 'package:auto_novel_reader_flutter/bloc/user/user_cubit.dart';
 import 'package:auto_novel_reader_flutter/bloc/web_cache/web_cache_cubit.dart';
@@ -24,8 +22,6 @@ late Size screenSize;
 late double appBarHeight;
 
 final globalBloc = GlobalBloc();
-final localFileCubit = LocalFileCubit();
-final epubViewerBloc = EpubViewerBloc();
 final configCubit = ConfigCubit();
 final userCubit = UserCubit();
 final webHomeBloc = WebHomeBloc();
@@ -36,10 +32,6 @@ final novelRankBloc = NovelRankBloc();
 final favoredCubit = FavoredCubit();
 
 GlobalBloc readGlobalBloc(BuildContext context) => context.read<GlobalBloc>();
-EpubViewerBloc readEpubViewerBloc(BuildContext context) =>
-    context.read<EpubViewerBloc>();
-LocalFileCubit readLocalFileCubit(BuildContext context) =>
-    context.read<LocalFileCubit>();
 ConfigCubit readConfigCubit(BuildContext context) =>
     context.read<ConfigCubit>();
 UserCubit readUserCubit(BuildContext context) => context.read<UserCubit>();

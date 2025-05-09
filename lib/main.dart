@@ -27,8 +27,6 @@ class MainApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => globalBloc),
-        BlocProvider(create: (context) => epubViewerBloc),
-        BlocProvider(create: (context) => localFileCubit),
         BlocProvider(create: (context) => configCubit),
         BlocProvider(create: (context) => userCubit),
         BlocProvider(create: (context) => webHomeBloc),

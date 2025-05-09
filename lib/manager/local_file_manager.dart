@@ -15,21 +15,9 @@ class _LocalFileManager {
     ]);
   }
 
-  Future<File?> getCover(String epubUid) async {
-    final coverPath = pathManager.getCoverFilePath(epubUid);
-    if (coverPath == null) return null;
-    final coverFile = File(coverPath);
-    return coverFile.existsSync() ? coverFile : null;
-  }
-
   Future<void> initEpubDownloadDir() async {
     final path = pathManager.epubDownloadPath;
     createDirectoryIfNotExists(path);
-  }
-
-  Future<void> cleanParseDir() async {
-    final path = pathManager.parseDirPath;
-    await deleteDirectory(path);
   }
 
   Future<void> cleanDownloadDir() async {

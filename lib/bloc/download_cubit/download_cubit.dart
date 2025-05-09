@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:auto_novel_reader_flutter/model/enums.dart';
 import 'package:auto_novel_reader_flutter/network/file_downloader.dart';
 import 'package:auto_novel_reader_flutter/util/client_util.dart';
-import 'package:auto_novel_reader_flutter/util/epub_util.dart';
-import 'package:auto_novel_reader_flutter/util/error_logger.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
@@ -91,12 +89,12 @@ class DownloadCubit extends HydratedCubit<DownloadState> {
     if (succeed) {
       if (file == null) throw Exception('file is null');
       emit(state.copyWith(
-          taskProgress: {...state.taskProgress}..remove(filename),
-          taskStatus: {
-            ...state.taskStatus,
-            filename: DownloadStatus.parsing,
-          }));
-      _parseEpub(file, filename);
+        taskStatus: {
+          ...state.taskStatus,
+          filename: DownloadStatus.succeed,
+        },
+      ));
+      showSucceedToast('$filename 下载成功');
     } else {
       emit(state.copyWith(taskStatus: {
         ...state.taskStatus,
@@ -105,41 +103,6 @@ class DownloadCubit extends HydratedCubit<DownloadState> {
         ...state.taskExtraInfo,
         filename: '下载失败',
       }));
-    }
-  }
-
-  finishParse(String filename) {
-    emit(state.copyWith(
-      taskStatus: {
-        ...state.taskStatus,
-        filename: DownloadStatus.succeed,
-      },
-    ));
-    showSucceedToast('$filename 下载成功');
-  }
-
-  parseFailed(String filename, Exception e) {
-    emit(state.copyWith(taskStatus: {
-      ...state.taskStatus,
-      filename: DownloadStatus.failed,
-    }, taskExtraInfo: {
-      ...state.taskExtraInfo,
-      filename: e.toString()
-    }));
-  }
-
-  Future<void> _parseEpub(File epub, String filename) async {
-    try {
-      final epubManageData = await epubUtil.parseEpub(
-        epub,
-        novelType: NovelType.wenku,
-        filename: filename,
-      );
-      localFileCubit.addEpubManageData(epubManageData);
-      finishParse(filename);
-    } catch (e, stackTrace) {
-      errorLogger.logError(e, stackTrace);
-      parseFailed(filename, Exception(e));
     }
   }
 

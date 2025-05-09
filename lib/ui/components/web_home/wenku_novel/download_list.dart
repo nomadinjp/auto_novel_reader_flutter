@@ -32,10 +32,6 @@ class DownloadList extends StatelessWidget {
               const SizedBox(height: 8),
               _buildMenu(),
               const SizedBox(height: 8),
-              Text('中文', style: styleManager.boldMediumTitle(context)),
-              const SizedBox(height: 8),
-              _buildZhMenu(),
-              const SizedBox(height: 8),
             ],
           ),
         ));
@@ -54,24 +50,6 @@ class DownloadList extends StatelessWidget {
           itemBuilder: (context, index) =>
               JpVolumeListTile(dto: jpVolumes[index]),
           itemCount: jpVolumes.length,
-        );
-      },
-    );
-  }
-
-  Widget _buildZhMenu() {
-    return BlocSelector<WenkuHomeBloc, WenkuHomeState, List<String>>(
-      selector: (state) {
-        return state.currentWenkuNovelDto?.volumeZh ?? [];
-      },
-      builder: (context, zhVolumes) {
-        return ListView.separated(
-          separatorBuilder: (context, index) => const Divider(),
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) =>
-              ZhVolumeListTile(title: zhVolumes[index]),
-          itemCount: zhVolumes.length,
         );
       },
     );
@@ -112,7 +90,7 @@ class JpVolumeListTile extends StatelessWidget {
               Text(
                 dto.volumeId,
                 style: styleManager.primaryColorTitleSmall(context),
-                maxLines: 2,
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
@@ -150,51 +128,4 @@ class JpVolumeListTile extends StatelessWidget {
 
   String get _getTranslationCount =>
       '总计 ${dto.total} / 百度 ${dto.baidu} / 有道 ${dto.youdao} /\n GPT ${dto.gpt} / Sakura ${dto.sakura}';
-}
-
-class ZhVolumeListTile extends StatelessWidget {
-  const ZhVolumeListTile({super.key, required this.title});
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 8.0),
-              Text(
-                title,
-                style: styleManager.primaryColorTitleSmall(context),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 8.0),
-            ],
-          ),
-        ),
-        const SizedBox(width: 8.0),
-        DownloadStateMonitor(
-            filename: title,
-            onPressed: () => {
-                  _downloadZhEpub(
-                    context,
-                    zhDownloadUrlGenerator(
-                      readWenkuHomeBloc(context).currentNovelId,
-                      title,
-                    ),
-                    title,
-                  )
-                }),
-      ],
-    );
-  }
-
-  void _downloadZhEpub(BuildContext context, String url, String title) {
-    readDownloadCubit(context)
-        .createDownloadTask(url, pathManager.epubDownloadPath, title);
-  }
 }

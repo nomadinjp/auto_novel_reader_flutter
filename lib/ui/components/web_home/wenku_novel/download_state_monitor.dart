@@ -1,6 +1,4 @@
 import 'package:auto_novel_reader_flutter/bloc/download_cubit/download_cubit.dart';
-import 'package:auto_novel_reader_flutter/bloc/epub_viewer/epub_viewer_bloc.dart';
-import 'package:auto_novel_reader_flutter/bloc/local_file/local_file_cubit.dart';
 import 'package:auto_novel_reader_flutter/manager/style_manager.dart';
 import 'package:auto_novel_reader_flutter/model/enums.dart';
 import 'package:auto_novel_reader_flutter/ui/components/universal/line_button.dart';
@@ -33,55 +31,30 @@ class DownloadStateMonitor extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             case DownloadStatus.downloading:
               return _buildDownloadProgress(filename);
-            case DownloadStatus.parsing:
-              return const Text('解析中');
+            case DownloadStatus.succeed:
+              return LineButton(
+                enabled: false,
+                text: '已下载',
+                onPressed: () {  },
+              );
             default:
-              break;
+              return FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: styleManager
+                      .colorScheme(context)
+                      .secondaryContainer,
+                ),
+                onPressed: () => onPressed(),
+                child: Icon(
+                  UniconsLine.file_download,
+                  color: styleManager
+                      .colorScheme(context)
+                      .onSecondaryContainer,
+                ),
+              );
           }
-
-          return BlocSelector<LocalFileCubit, LocalFileState, bool>(
-            selector: (state) {
-              final dataList = state.epubManageDataList;
-              final epubManageDataIndex = dataList
-                  .indexWhere((element) => element.filename == filename);
-              return epubManageDataIndex != -1;
-            },
-            builder: (context, state) {
-              return state
-                  ? _buildReadButton(context)
-                  : FilledButton(
-                      style: FilledButton.styleFrom(
-                        backgroundColor: styleManager
-                            .colorScheme(context)
-                            .secondaryContainer,
-                      ),
-                      onPressed: () => onPressed(),
-                      child: Icon(
-                        UniconsLine.file_download,
-                        color: styleManager
-                            .colorScheme(context)
-                            .onSecondaryContainer,
-                      ),
-                    );
-            },
-          );
         }),
       ),
-    );
-  }
-
-  LineButton _buildReadButton(BuildContext context) {
-    return LineButton(
-      text: '阅读',
-      onPressed: () {
-        final epubManageData =
-            readLocalFileCubit(context).getEpubManageData(filename);
-        if (epubManageData == null) {
-          throw Exception('epubManageData is null');
-        }
-        readEpubViewerBloc(context)
-            .add(EpubViewerEvent.open(epubManageData, context));
-      },
     );
   }
 

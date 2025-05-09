@@ -23,12 +23,6 @@ class DataSettings extends StatelessWidget {
           children: [
             IconOption(
               icon: UniconsLine.brush_alt,
-              text: '清空 Epub 缓存',
-              tip: '所有的 epub 都需要重新下载和解析哦',
-              onTap: () => {_cleanCache(context)},
-            ),
-            IconOption(
-              icon: UniconsLine.brush_alt,
               text: '清理日志',
               onTap: () => errorLogger.cleanAllLogs(),
             ),
@@ -50,9 +44,5 @@ class DataSettings extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _cleanCache(BuildContext context) {
-    readLocalFileCubit(context).cleanEpubManageData();
   }
 }
