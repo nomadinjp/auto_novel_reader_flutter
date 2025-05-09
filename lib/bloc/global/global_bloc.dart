@@ -29,26 +29,6 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
   }
 
   _onCheckUpdate(_CheckUpdate event, Emitter<GlobalState> emit) async {
-    late final PackageInfo packageInfo;
-    late final ReleaseData? latestReleaseData;
-    await Future.wait([
-      PackageInfo.fromPlatform().then((value) => packageInfo = value),
-      getLatestRelease().then((value) => latestReleaseData = value),
-    ]);
-    if (latestReleaseData == null) {
-      showErrorToast('获取最新版本失败');
-      return;
-    }
-    if (packageInfo.version == latestReleaseData!.tag) {
-      if (event.showSuccessToast) {
-        showSucceedToast('已是最新版本');
-      }
-      return;
-    }
-    emit(state.copyWith(
-      shouldShowNewReleaseDialog: true,
-      latestReleaseData: latestReleaseData,
-    ));
   }
 
   _onCloseReleaseDialog(Emitter<GlobalState> emit) {
