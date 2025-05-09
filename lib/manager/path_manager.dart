@@ -1,13 +1,15 @@
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:downloadsfolder/downloadsfolder.dart';
 
 final pathManager = _PathManager();
 
 class _PathManager {
   late String externalStorageDirectory;
+  late String downloadsDirectory;
 
-  final _epubDownloadPath = '/downloads/epub';
+  final _epubDownloadPath = '/epub';
   final _parseDirPath = '/parse/epub';
   final _epubCoverPath = '/parse/epub/cover';
   final _backupPath = '/parse/epub/backup';
@@ -16,13 +18,10 @@ class _PathManager {
   _PathManager();
 
   Future<void> init() async {
-    await _getExternalStorageDirectory();
-  }
-
-  Future<void> _getExternalStorageDirectory() async {
-    final directory = await getExternalStorageDirectory();
-    if (directory == null) throw Exception('no external storage');
-    externalStorageDirectory = directory.path;
+    final [dir1, dir2] = await Future.wait([getExternalStorageDirectory(), getDownloadDirectory()]);
+    if (dir1 == null || dir2 == null) throw Exception('init path manager error');
+    externalStorageDirectory = dir1.path;
+    downloadsDirectory = dir2.path;
   }
 
   String? getEpubFilePath(String filename) {
@@ -47,8 +46,7 @@ class _PathManager {
   /// externalStorageDirectory/parse/epub/cover
   String get epubCoverPath => externalStorageDirectory + _epubCoverPath;
 
-  /// externalStorageDirectory/downloads/epub
-  String get epubDownloadPath => externalStorageDirectory + _epubDownloadPath;
+  String get epubDownloadPath => downloadsDirectory + _epubDownloadPath;
 
   /// externalStorageDirectory/parse/epub
   String get parseDirPath => externalStorageDirectory + _parseDirPath;
