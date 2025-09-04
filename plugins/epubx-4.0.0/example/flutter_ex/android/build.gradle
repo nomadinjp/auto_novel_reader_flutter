@@ -16,6 +16,7 @@ allprojects {
         google()
         mavenCentral()
     }
+
 }
 
 rootProject.buildDir = '../build'
@@ -27,3 +28,4 @@ subprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
