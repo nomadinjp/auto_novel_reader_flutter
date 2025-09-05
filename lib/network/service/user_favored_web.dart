@@ -2,23 +2,23 @@ part of 'service.dart';
 
 @ChopperApi(baseUrl: '/user/favored-web')
 abstract class UserFavoredWebService extends ChopperService {
-  @Post(path: '')
+  @POST(path: '')
   Future<Response> _postWeb(@Body() body);
   Future<Response?> postWeb(Map<String, dynamic> body) =>
       tokenRequest(() => _postWeb(body));
 
-  @Put(path: '/{favoredId}')
+  @PUT(path: '/{favoredId}')
   Future<Response> _putId(@Path() String favoredId, @Body() body);
   Future<Response?> putId(
           @Path() String favoredId, Map<String, dynamic> body) =>
       tokenRequest(() => _putId(favoredId, body));
 
-  @Delete(path: '/{favoredId}')
+  @DELETE(path: '/{favoredId}')
   Future<Response> _delId(@Path() String favoredId);
   Future<Response?> delId(@Path() String favoredId) =>
       tokenRequest(() => _delId(favoredId));
 
-  @Get(path: '/{favoredId}')
+  @GET(path: '/{favoredId}')
   Future<Response> _getIdList(
     @Path() String favoredId,
     @Query() int page,
@@ -33,7 +33,7 @@ abstract class UserFavoredWebService extends ChopperService {
   }) =>
       tokenRequest(() => _getIdList(favoredId, page, pageSize, sort));
 
-  @Put(path: '/{favoredId}/{providerId}/{novelId}')
+  @PUT(path: '/{favoredId}/{providerId}/{novelId}')
   Future<Response> _putNovelId(
     @Path() String favoredId,
     @Path() String providerId,
@@ -46,7 +46,7 @@ abstract class UserFavoredWebService extends ChopperService {
   }) =>
       tokenRequest(() => _putNovelId(favoredId, providerId, novelId));
 
-  @Delete(path: '/{favoredId}/{providerId}/{novelId}')
+  @DELETE(path: '/{favoredId}/{providerId}/{novelId}')
   Future<Response> _deleteNovelId(
     @Path() String favoredId,
     @Path() String providerId,

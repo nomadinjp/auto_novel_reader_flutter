@@ -14,8 +14,11 @@ final apiClient = _ApiClient();
 
 class _ApiClient {
   ChopperClient? chopper;
-  late ArticleService articleService;
+
+  @Deprecated('Use AuthClient instead')
   late AuthService authService;
+
+  late ArticleService articleService;
   late CommentService commentService;
   late OperationHistoryService operationHistoryService;
   late SakuraService sakuraService;
@@ -29,6 +32,10 @@ class _ApiClient {
   final _tokenInterceptor = RequestInterceptor();
   final _responseInterceptor = ResponseInterceptor();
 
+  String authUrl = '';
+
+  _ApiClient();
+
   void createChopper() {
     chopper = ChopperClient(
       client: http.IOClient(
@@ -41,7 +48,6 @@ class _ApiClient {
       ],
       services: [
         ArticleService.create(),
-        AuthService.create(),
         CommentService.create(),
         OperationHistoryService.create(),
         SakuraService.create(),
@@ -54,6 +60,10 @@ class _ApiClient {
       ],
       converter: const JsonConverter(),
     );
+
+    if (chopper == null) {
+      throw Exception('chopper is null');
+    }
 
     articleService = chopper!.getService<ArticleService>();
     authService = chopper!.getService<AuthService>();

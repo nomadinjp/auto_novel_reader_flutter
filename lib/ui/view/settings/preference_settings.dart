@@ -1,9 +1,7 @@
 import 'package:auto_novel_reader_flutter/manager/style_manager.dart';
 import 'package:auto_novel_reader_flutter/model/enums.dart';
-import 'package:auto_novel_reader_flutter/ui/components/universal/icon_option.dart';
 import 'package:auto_novel_reader_flutter/ui/components/universal/switch_option.dart';
 import 'package:auto_novel_reader_flutter/ui/components/universal/tab_option.dart';
-import 'package:auto_novel_reader_flutter/ui/view/settings/shield_settings.dart';
 import 'package:auto_novel_reader_flutter/util/client_util.dart';
 import 'package:flutter/material.dart';
 import 'package:unicons/unicons.dart';
@@ -59,7 +57,8 @@ class PreferenceSettings extends StatelessWidget {
 
   Widget _buildUrlSetter(BuildContext context) {
     const urls = [
-      'books.fishhawk.top',
+      ''
+          'books.fishhawk.top',
       'books1.fishhawk.top',
       'books2.fishhawk.top',
     ];
@@ -82,14 +81,5 @@ class PreferenceSettings extends StatelessWidget {
         icon: UniconsLine.paint_tool,
         tip: '需要重启才能生效',
         tabs: themeModeZhName);
-  }
-
-  // 当前 api 暂不支持
-  Widget _buildShieldSetter(BuildContext context) {
-    return IconOption(
-        icon: UniconsLine.ban,
-        text: '屏蔽设置',
-        onTap: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ShieldSettings())));
   }
 }

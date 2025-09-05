@@ -31,7 +31,7 @@ class InfoBadge extends StatelessWidget {
           padding: padding,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            color: backgroundColor ?? Colors.grey.withOpacity(0.5),
+            color: backgroundColor ?? Colors.grey.withValues(alpha: 0.5),
           ),
           child: Text(
             info,

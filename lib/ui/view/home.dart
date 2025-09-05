@@ -101,8 +101,11 @@ class HomeView extends StatelessWidget {
       builder: (BuildContext context) {
         return ReleaseAlertDialog(data: data);
       },
-    ).then((_) =>
-        readGlobalBloc(context).add(const GlobalEvent.closeReleaseDialog()));
+    ).then((_) {
+      if (context.mounted) {
+        readGlobalBloc(context).add(const GlobalEvent.closeReleaseDialog());
+      }
+    });
   }
 }
 

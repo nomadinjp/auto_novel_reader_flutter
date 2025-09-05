@@ -217,7 +217,7 @@ class _EpubWebviewState extends State<EpubWebview> {
                   height: maxHeight,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(radius),
-                    color: Colors.grey.withOpacity(0.5),
+                    color: Colors.grey.withValues(alpha: 0.5),
                   )),
               Container(
                 decoration: BoxDecoration(

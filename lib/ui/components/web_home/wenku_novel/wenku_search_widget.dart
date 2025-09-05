@@ -132,9 +132,13 @@ class _WenkuSearchWidgetState extends State<WenkuSearchWidget>
           width: double.infinity,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.0),
-              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.15))],
-              color:
-                  styleManager.colorScheme(context).surface.withOpacity(0.6)),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withValues(alpha: 0.15))
+              ],
+              color: styleManager
+                  .colorScheme(context)
+                  .surface
+                  .withValues(alpha: 0.6)),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
             child: _buildFilters(),

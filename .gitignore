@@ -47,6 +47,10 @@ app.*.map.json
 **.freezed.dart
 **.chopper.dart
 
+# env
+/lib/env/.env
+
+
 # 工作区设置
 .vscode/pinned-files.json
 .vscode/settings.json
