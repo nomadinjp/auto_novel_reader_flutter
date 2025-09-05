@@ -92,11 +92,9 @@ class UserCubit extends HydratedCubit<UserState> {
     try {
       final jwt = JWT.decode(token).payload;
       emit(state.copyWith(
-        id: jwt['id'],
-        email: jwt['email'],
-        username: jwt['username'],
+        username: jwt['sub'],
         role: jwt['role'],
-        createAt: jwt['createAt'],
+        createAt: jwt['crat'],
         emailOrUsername: emailOrUsername,
         password: password,
         autoSignIn: true,
