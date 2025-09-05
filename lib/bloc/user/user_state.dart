@@ -4,6 +4,7 @@ part of 'user_cubit.dart';
 class UserState with _$UserState {
   const factory UserState.initial({
     String? token,
+    String? refreshToken,
     @Default('') String emailOrUsername,
     @Default('') String password,
     String? email,

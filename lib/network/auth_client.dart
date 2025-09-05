@@ -1,25 +1,22 @@
 import 'package:auto_novel_reader_flutter/network/simple_client.dart';
+import 'package:auto_novel_reader_flutter/util/client_util.dart';
 import 'package:http/http.dart' show Response;
 
-class AuthClient {
-  final String baseUrl;
-  late final SimpleClient client;
+final authClient = _AuthClient();
 
-  AuthClient({required this.baseUrl}) {
-    client = SimpleClient(baseUrl: '$baseUrl/v1/auth');
-  }
+class _AuthClient {
+  late final SimpleClient client = SimpleClient();
 
   Future<Response> login(dynamic body) => client.post(
-        url: '/login',
+        url: 'https://${configCubit.state.authHost}/api/v1/auth/login',
         data: body,
         headers: {'Content-Type': 'application/json'},
       );
 
-  // NEED_TEST
-  Future<Response> refresh(String token) => client.post(
-        url: '/refresh',
+  Future<Response> refresh() => client.post(
+        url: 'https://${configCubit.state.authHost}/api/v1/auth/refresh',
         params: {'app': 'n'},
-        headers: {'Cookie': 'refresh-token=$token'},
+        headers: {'Cookie': 'refresh-token=${userCubit.state.refreshToken}'},
       );
 
   // NEED_TEST

@@ -2,10 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class SimpleClient {
-  final String baseUrl;
-
-  SimpleClient({this.baseUrl = ''});
-
   Future<http.Response> _sendRestRequest({
     required String url,
     dynamic data,
@@ -14,7 +10,7 @@ class SimpleClient {
     Map<String, String>? headers,
   }) async {
     // 拼接 query 参数
-    final uri = Uri.parse(baseUrl + url).replace(queryParameters: params);
+    final uri = Uri.parse(url).replace(queryParameters: params);
 
     final request = http.Request(method, uri);
 
