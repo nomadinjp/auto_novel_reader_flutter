@@ -108,6 +108,7 @@ class UserCubit extends HydratedCubit<UserState> {
       errorLogger.logError(e, stackTrace);
       return false;
     }
+
     favoredCubit.init();
     return true;
   }
@@ -115,12 +116,13 @@ class UserCubit extends HydratedCubit<UserState> {
   /// 在 apiClient 初始化完成后调用
   Future<void> activateAuth(BuildContext context) async {
     if (state.token == null) return;
+    await refreshToken();
 
     final signInTime = state.signInTime;
     final timeSpan = (signInTime?.difference(DateTime.now()).inDays.abs() ?? 0);
-    if (signInTime == null || timeSpan >= 29) {
+    if (signInTime == null || timeSpan >= 7) {
       await _autoSignIn(context);
-    } else if (timeSpan >= 25) {
+    } else if (timeSpan >= 6) {
       await refreshToken();
     }
     talker.debug('test finish');

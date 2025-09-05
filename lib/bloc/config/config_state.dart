@@ -7,7 +7,7 @@ class ConfigState with _$ConfigState {
     @Default(false) bool showErrorInfo, // 如果 html 元素加载失败，则显示错误信息
     @Default(true) bool volumeKeyShift, // 音量键控制翻页
     @Default(0) int helloPageIndex, // 欢迎页,
-    @Default('books.fishhawk.top') String host, // 网站地址
+    @Default('n.novelia.cc') String host, // 网站地址
     @Default('auth.novelia.cc') String authHost, // 网站地址
     @Default(WebNovelConfig()) WebNovelConfig webNovelConfig, // web 阅读内容设置
     @Default(true) bool preloadNovel, // 预加载小说

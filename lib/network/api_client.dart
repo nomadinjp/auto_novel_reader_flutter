@@ -48,6 +48,7 @@ class _ApiClient {
       ],
       services: [
         ArticleService.create(),
+        AuthService.create(),
         CommentService.create(),
         OperationHistoryService.create(),
         SakuraService.create(),
