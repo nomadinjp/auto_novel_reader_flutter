@@ -88,7 +88,7 @@ class _BookListTileState extends State<BookListTile> {
         },
         child: Container(
           padding: const EdgeInsets.all(8.0),
-          height: 128,
+          height: 132,
           child: Row(
             children: [
               ClipRRect(
