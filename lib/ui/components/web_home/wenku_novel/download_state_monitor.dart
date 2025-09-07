@@ -35,6 +35,12 @@ class DownloadStateMonitor extends StatelessWidget {
               return _buildDownloadProgress(filename);
             case DownloadStatus.parsing:
               return const Text('解析中');
+            case DownloadStatus.deleted:
+              return const Text('已删除');
+            case DownloadStatus.failed:
+              return const Text('下载失败');
+            case DownloadStatus.succeed:
+              return _buildReadButton(context);
             default:
               break;
           }
@@ -49,23 +55,23 @@ class DownloadStateMonitor extends StatelessWidget {
             builder: (context, state) {
               return state
                   ? _buildReadButton(context)
-                  : FilledButton(
-                      style: FilledButton.styleFrom(
-                        backgroundColor: styleManager
-                            .colorScheme(context)
-                            .secondaryContainer,
-                      ),
-                      onPressed: () => onPressed(),
-                      child: Icon(
-                        UniconsLine.file_download,
-                        color: styleManager
-                            .colorScheme(context)
-                            .onSecondaryContainer,
-                      ),
-                    );
+                  : _buildDownloadButton(context);
             },
           );
         }),
+      ),
+    );
+  }
+
+  FilledButton _buildDownloadButton(BuildContext context) {
+    return FilledButton(
+      style: FilledButton.styleFrom(
+        backgroundColor: styleManager.colorScheme(context).secondaryContainer,
+      ),
+      onPressed: () => onPressed(),
+      child: Icon(
+        UniconsLine.file_download,
+        color: styleManager.colorScheme(context).onSecondaryContainer,
       ),
     );
   }

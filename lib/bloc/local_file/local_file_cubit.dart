@@ -65,6 +65,8 @@ class LocalFileCubit extends HydratedCubit<LocalFileState> {
         .removeWhere((element) => element.uid == epubManageData.uid);
     emit(state.copyWith(epubManageDataList: dataListSnapshot));
     epubUtil.deleteEpubBook(epubManageData);
+    downloadCubit.updateStatus(
+        epubManageData.filename ?? '', DownloadStatus.deleted);
   }
 
   EpubManageData? getEpubManageData(String epubUid,

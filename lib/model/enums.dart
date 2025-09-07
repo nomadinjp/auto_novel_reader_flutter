@@ -132,6 +132,7 @@ enum DownloadStatus {
   failed,
   succeed,
   none,
+  deleted,
 }
 
 enum NovelProvider {
