@@ -143,7 +143,8 @@ class _EpubWebviewState extends State<EpubWebview> {
     } else {
       if (isDark) {
         final color = styleManager.colorScheme(context).onSurface;
-        stylesMap['color'] = 'rgb(${color.red},${color.green},${color.blue})';
+        stylesMap['color'] =
+            'rgb(${color.r * 255.0},${color.g * 255.0},${color.b * 255.0})';
       }
     }
     return stylesMap;

@@ -119,7 +119,9 @@ class UserCubit extends HydratedCubit<UserState> {
     final signInTime = state.signInTime;
     final timeSpan = (signInTime?.difference(DateTime.now()).inDays.abs() ?? 0);
     if (signInTime == null || timeSpan >= 7) {
-      await _autoSignIn(context);
+      if (context.mounted) {
+        await _autoSignIn(context);
+      }
     } else if (timeSpan >= 6) {
       await refreshToken();
     }
