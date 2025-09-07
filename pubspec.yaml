@@ -14,12 +14,12 @@ dependencies:
     path: plugins/epubx-4.0.0
   image: ^3.3.0
   # 网络请求
-  chopper: ^8.0.1+1
+  chopper: ^8.3.0
   dio: ^5.7.0
   http: ^1.2.2
   # html
   html: ^0.15.4
-  flutter_widget_from_html: ^0.15.1
+  flutter_widget_from_html: ^0.17.1
   # 文件选择
   path_provider: ^2.1.4
   file_picker: ^8.0.7
@@ -31,7 +31,7 @@ dependencies:
   # 图标
   unicons: ^2.1.1
   # 吐司
-  fluttertoast: ^8.2.8
+  fluttertoast: ^8.2.12
   # 代码生成
   freezed: ^2.5.2
   freezed_annotation: ^2.4.1
@@ -55,9 +55,9 @@ dependencies:
   url_launcher: ^6.3.0
   package_info_plus: ^8.0.2
   wakelock_plus: ^1.2.8
-  envied: ^1.2.1
 
   #  env
+  envied: ^1.2.1
 
 dev_dependencies:
   flutter_test:
