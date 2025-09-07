@@ -35,15 +35,17 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
       PackageInfo.fromPlatform().then((value) => packageInfo = value),
       getLatestRelease().then((value) => latestReleaseData = value),
     ]);
+
     if (latestReleaseData == null) {
       showErrorToast('获取最新版本失败');
       return;
     }
     if (packageInfo.version == latestReleaseData!.tag) {
-      if (event.showSuccessToast) {
-        showSucceedToast('已是最新版本');
-      }
-      return;
+      // TODO
+      // if (event.showSuccessToast) {
+      //   showSucceedToast('已是最新版本');
+      // }
+      // return;
     }
     emit(state.copyWith(
       shouldShowNewReleaseDialog: true,

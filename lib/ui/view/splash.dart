@@ -62,7 +62,8 @@ class _SplashViewState extends State<SplashView> {
       globalBloc.add(const GlobalEvent.checkUpdate());
     }
     globalBloc.add(GlobalEvent.switchNavigationDestination(
-        destinationIndex: configCubit.state.helloPageIndex));
+      destinationIndex: configCubit.state.helloPageIndex,
+    ));
     return;
   }
 

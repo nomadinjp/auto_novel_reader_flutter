@@ -7,9 +7,11 @@ import 'package:auto_novel_reader_flutter/util/client_util.dart';
 import 'package:auto_novel_reader_flutter/ui/view/reader/reader.dart';
 import 'package:auto_novel_reader_flutter/ui/view/settings.dart';
 import 'package:auto_novel_reader_flutter/ui/view/home/web_home.dart';
+import 'package:auto_novel_reader_flutter/util/error_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:markdown_widget/config/all.dart';
 import 'package:unicons/unicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -27,17 +29,25 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (readGlobalBloc(context).state.shouldShowNewReleaseDialog) {
+        _showNewReleaseDialog(
+          context,
+          readGlobalBloc(context).state.latestReleaseData,
+        );
+      }
+    });
     var reverse = true;
-    if (readGlobalBloc(context).state.shouldShowNewReleaseDialog) {
-      _showNewReleaseDialog(
-          context, readGlobalBloc(context).state.latestReleaseData!);
-    }
+
     readFavoredCubit(context).init();
     readDownloadCubit(context).init();
     return BlocListener<GlobalBloc, GlobalState>(
       listener: (context, state) {
         if (state.shouldShowNewReleaseDialog) {
-          _showNewReleaseDialog(context, state.latestReleaseData!);
+          _showNewReleaseDialog(
+            context,
+            state.latestReleaseData,
+          );
         }
       },
       child: BlocBuilder<GlobalBloc, GlobalState>(
@@ -95,7 +105,12 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  void _showNewReleaseDialog(BuildContext context, ReleaseData data) {
+  void _showNewReleaseDialog(BuildContext context, ReleaseData? data) {
+    if (data == null) {
+      errorLogger.logError('release data is null', StackTrace.current);
+      throw Exception('release data is null');
+    }
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -115,8 +130,10 @@ class ReleaseAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('发现新版本'),
-      content: Text(data.body),
+      title: const Text('喔~新版本'),
+      content: Column(
+        children: MarkdownGenerator().buildWidgets(data.body),
+      ),
       actions: [
         TextButton(
           child: const Text('蓝奏云下载'),
