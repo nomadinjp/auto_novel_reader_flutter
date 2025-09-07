@@ -57,10 +57,7 @@ class PreferenceSettings extends StatelessWidget {
 
   Widget _buildUrlSetter(BuildContext context) {
     const urls = [
-      ''
-          'books.fishhawk.top',
-      'books1.fishhawk.top',
-      'books2.fishhawk.top',
+      'n.novelia.cc',
     ];
     final cubit = readConfigCubit(context);
     return TabOption(
