@@ -24,14 +24,16 @@ abstract class UserFavoredWebService extends ChopperService {
     @Query() int page,
     @Query() int pageSize,
     @Query() String sort,
+    @Query() String provider,
   );
   Future<Response?> getIdList({
     String favoredId = 'default',
     int page = 0,
     int pageSize = 8,
     String sort = 'update',
+    String provider = 'kakuyomu,syosetu,novelup,hameln,pixiv,alphapolis',
   }) =>
-      tokenRequest(() => _getIdList(favoredId, page, pageSize, sort));
+      tokenRequest(() => _getIdList(favoredId, page, pageSize, sort, provider));
 
   @PUT(path: '/{favoredId}/{providerId}/{novelId}')
   Future<Response> _putNovelId(
