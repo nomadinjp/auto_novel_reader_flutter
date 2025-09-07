@@ -175,9 +175,8 @@ class _FavoredViewState extends State<FavoredView> {
         return state.token != null;
       },
       builder: (context, state) {
-        return !state
-            ? const Center(child: Text('未登录'))
-            : Stack(
+        return state
+            ? Stack(
                 children: [
                   FavoredBody(
                     refreshWeb: doRefreshWeb,
@@ -187,6 +186,23 @@ class _FavoredViewState extends State<FavoredView> {
                   ),
                   _buildFavoredSelector(context),
                   _buildAddFavoredButton(context),
+                ],
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Center(
+                      child: Text(
+                    '🥺',
+                    style: TextStyle(fontSize: 98),
+                  )),
+                  Text(
+                    '未登录',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.grey.withAlpha(128),
+                    ),
+                  ),
                 ],
               );
       },
