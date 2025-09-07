@@ -188,6 +188,7 @@ class _EpubWebviewState extends State<EpubWebview> {
   }
 
   Widget _buildChapterProgress() {
+    readProgress = readProgress.clamp(0.0, 1.0);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InfoBadge(
