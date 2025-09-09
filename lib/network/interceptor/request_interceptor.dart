@@ -9,8 +9,7 @@ class RequestInterceptor implements Interceptor {
   FutureOr<Response<BodyType>> intercept<BodyType>(
       Chain<BodyType> chain) async {
     final token = userCubit.state.token;
-    if (token == null ||
-        token.isEmpty ||
+    if ((token == null || token.isEmpty) &&
         tokenlessApi.contains(chain.request.url.toString())) {
       return chain.proceed(chain.request);
     }
@@ -29,4 +28,4 @@ class RequestInterceptor implements Interceptor {
   }
 }
 
-final tokenlessApi = ['https://books.fishhawk.top/api/auth/sign-in'];
+final tokenlessApi = ['https://auth.novelia.cc/api/v1/auth/login'];

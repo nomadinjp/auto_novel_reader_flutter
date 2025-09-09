@@ -16,6 +16,15 @@ if (localPropertiesFile.exists()) {
 def flutterVersionCode = localProperties.getProperty("flutter.versionCode") ?: "1"
 def flutterVersionName = localProperties.getProperty("flutter.versionName") ?: "1.0"
 
+
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+
 android {
     namespace = "com.prixii.auto_novel_reader_flutter"
     compileSdk = flutter.compileSdkVersion
@@ -39,22 +48,11 @@ android {
 
     signingConfigs {
         release {
-            // 延迟加载，只在执行 release 构建任务时读取 key.properties
-            def releaseConfig = this
-            afterEvaluate {
-                if (gradle.startParameter.taskNames.any { it.toLowerCase().contains("release") }) {
-                    def keystorePropertiesFile = rootProject.file("key.properties")
-                    if (keystorePropertiesFile.exists()) {
-                        def keystoreProperties = new Properties()
-                        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-                        releaseConfig.keyAlias = keystoreProperties['keyAlias']
-                        releaseConfig.keyPassword = keystoreProperties['keyPassword']
-                        releaseConfig.storeFile = file(keystoreProperties['storeFile'])
-                        releaseConfig.storePassword = keystoreProperties['storePassword']
-                    } else {
-                        println("Warning: key.properties not found, release build will fail if signing is required.")
-                    }
-                }
+            if (keystorePropertiesFile.exists()) {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
             }
         }
     }
