@@ -36,8 +36,8 @@ class UserCubit extends HydratedCubit<UserState> {
       final refreshToken =
           extractRefreshToken(loginResponse.headers['set-cookie'] ?? '');
       return afterLogin(
-        token: token,
-        refreshToken: refreshToken,
+        token: token, // 时效 7 天的 token
+        refreshToken: refreshToken, // 时效 100 天，用于刷新 token
         emailOrUsername: emailOrUsername,
         password: password,
       );
@@ -118,7 +118,7 @@ class UserCubit extends HydratedCubit<UserState> {
 
     final signInTime = state.signInTime;
     final timeSpan = (signInTime?.difference(DateTime.now()).inDays.abs() ?? 0);
-    if (signInTime == null || timeSpan >= 7) {
+    if (signInTime == null || timeSpan >= 99) {
       if (context.mounted) {
         await _autoSignIn(context);
       }
