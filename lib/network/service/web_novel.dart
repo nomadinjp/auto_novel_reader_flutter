@@ -15,10 +15,18 @@ abstract class WebNovelService extends ChopperService {
   });
 
   @GET(path: '/rank/{providerId}')
-  Future<Response> getRank(
+  Future<Response> _getRank(
     @Path() String providerId,
     @QueryMap() Map<String, String> query,
   );
+  Future<Response> getRank(
+    @Path() String providerId,
+    @QueryMap() Map<String, String> query,
+  ) {
+    final page = query['page'];
+    if (page != null) query['page'] = (int.parse(page) + 1).toString();
+    return _getRank(providerId, query);
+  }
 
   @GET(path: '/{providerId}/{novelId}')
   Future<Response> getNovelId(
