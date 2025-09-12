@@ -2,7 +2,7 @@ part of 'service.dart';
 
 @ChopperApi(baseUrl: '/sakura')
 abstract class SakuraService extends ChopperService {
-  @Post(path: '/incorrect-case')
+  @POST(path: '/incorrect-case')
   Future<Response> _postIncorrectCase();
   Future<Response?> postIncorrectCase() =>
       tokenRequest(() => _postIncorrectCase());

@@ -2,7 +2,7 @@ part of 'service.dart';
 
 @ChopperApi(baseUrl: '/user/read-history')
 abstract class UserReadHistoryWebService extends ChopperService {
-  @Get(path: '')
+  @GET(path: '')
   Future<Response> _getList(@Query() int page, @Query() int pageSize);
   Future<Response?> getList({
     int page = 0,
@@ -10,23 +10,23 @@ abstract class UserReadHistoryWebService extends ChopperService {
   }) =>
       tokenRequest(() => _getList(page, pageSize));
 
-  @Delete(path: '')
+  @DELETE(path: '')
   Future<Response> _delHistory();
   Future<Response?> delHistory() => tokenRequest(() => _delHistory());
 
-  @Get(path: '/paused')
+  @GET(path: '/paused')
   Future<Response> _getPaused();
   Future<Response?> getPaused() => tokenRequest(() => _getPaused());
 
-  @Put(path: '/paused')
+  @PUT(path: '/paused')
   Future<Response> _putPaused();
   Future<Response?> putPaused() => tokenRequest(() => _putPaused());
 
-  @Delete(path: '/paused')
+  @DELETE(path: '/paused')
   Future<Response> _delPaused();
   Future<Response?> delPaused() => tokenRequest(() => _delPaused());
 
-  @Put(path: '/{providerId}/{novelId}')
+  @PUT(path: '/{providerId}/{novelId}')
   Future<Response> _putNovelId(
       @Path() String providerId, @Path() String novelId, @Body() body);
   Future<Response?> putNovelId(
@@ -37,7 +37,7 @@ abstract class UserReadHistoryWebService extends ChopperService {
             chapterId,
           ));
 
-  @Delete(path: '/{providerId}/{novelId}')
+  @DELETE(path: '/{providerId}/{novelId}')
   Future<Response> _delNovelId(
       @Path() String providerId, @Path() String novelId);
   Future<Response?> delNovelId(String providerId, String novelId) =>

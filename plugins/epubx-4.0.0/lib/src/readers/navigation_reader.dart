@@ -271,8 +271,9 @@ class NavigationReader {
   }
 
   static String extractContentPath(String _tocFileEntryPath, String ref) {
-    if (!_tocFileEntryPath.endsWith('/'))
+    if (!_tocFileEntryPath.endsWith('/')) {
       _tocFileEntryPath = _tocFileEntryPath + '/';
+    }
     var r = _tocFileEntryPath + ref;
     r = r.replaceAll('/\./', '/');
     r = r.replaceAll(RegExp(r'/[^/]+/\.\./'), '/');

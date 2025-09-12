@@ -1,4 +1,5 @@
 import 'package:auto_novel_reader_flutter/network/api_client.dart';
+import 'package:auto_novel_reader_flutter/network/auth_client.dart';
 import 'package:auto_novel_reader_flutter/util/client_util.dart';
 import 'package:auto_novel_reader_flutter/util/error_logger.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
@@ -14,23 +15,32 @@ part 'user_cubit.g.dart';
 class UserCubit extends HydratedCubit<UserState> {
   UserCubit() : super(const UserState.initial());
 
-  Future<bool> signIn(String emailOrUsername, String password) async {
+  Future<bool> login(String emailOrUsername, String password) async {
     try {
-      final signInResponse = await apiClient.authService.postSignIn({
-        'emailOrUsername': emailOrUsername,
+      final loginResponse = await authClient.login({
+        'username': emailOrUsername,
         'password': password,
+        'app': 'n',
       });
-      if (signInResponse.statusCode == 502) {
+
+      if (loginResponse.statusCode == 502) {
         Fluttertoast.showToast(msg: '服务器维护中');
         return false;
       }
-      if (signInResponse.statusCode != 200) {
-        showErrorToast('登录失败, ${signInResponse.statusCode}');
+      if (loginResponse.statusCode != 200) {
+        showErrorToast('登录失败, ${loginResponse.statusCode}');
         return false;
       }
-      final token = signInResponse.body;
+
+      final token = loginResponse.body;
+      final refreshToken =
+          extractRefreshToken(loginResponse.headers['set-cookie'] ?? '');
       return afterLogin(
-          token: token, emailOrUsername: emailOrUsername, password: password);
+        token: token, // 时效 7 天的 token
+        refreshToken: refreshToken, // 时效 100 天，用于刷新 token
+        emailOrUsername: emailOrUsername,
+        password: password,
+      );
     } catch (e, stackTrace) {
       errorLogger.logError(e, stackTrace);
       showErrorToast(
@@ -55,6 +65,8 @@ class UserCubit extends HydratedCubit<UserState> {
       });
       return afterLogin(
         token: response.body,
+        // TODO
+        refreshToken: '',
         emailOrUsername: email,
         password: password,
       );
@@ -69,6 +81,7 @@ class UserCubit extends HydratedCubit<UserState> {
 
   bool afterLogin({
     required String? token,
+    required String? refreshToken,
     required String emailOrUsername,
     required String password,
   }) {
@@ -79,21 +92,21 @@ class UserCubit extends HydratedCubit<UserState> {
     try {
       final jwt = JWT.decode(token).payload;
       emit(state.copyWith(
-        id: jwt['id'],
-        email: jwt['email'],
-        username: jwt['username'],
+        username: jwt['sub'],
         role: jwt['role'],
-        createAt: jwt['createAt'],
+        createAt: jwt['crat'],
         emailOrUsername: emailOrUsername,
         password: password,
         autoSignIn: true,
         token: token,
+        refreshToken: refreshToken,
         signInTime: DateTime.now(),
       ));
     } catch (e, stackTrace) {
       errorLogger.logError(e, stackTrace);
       return false;
     }
+
     favoredCubit.init();
     return true;
   }
@@ -101,19 +114,22 @@ class UserCubit extends HydratedCubit<UserState> {
   /// 在 apiClient 初始化完成后调用
   Future<void> activateAuth(BuildContext context) async {
     if (state.token == null) return;
+    await refreshToken();
 
     final signInTime = state.signInTime;
     final timeSpan = (signInTime?.difference(DateTime.now()).inDays.abs() ?? 0);
-    if (signInTime == null || timeSpan >= 29) {
-      await _autoSignIn(context);
-    } else if (timeSpan >= 25) {
-      await _renewToken();
+    if (signInTime == null || timeSpan >= 99) {
+      if (context.mounted) {
+        await _autoSignIn(context);
+      }
+    } else if (timeSpan >= 6) {
+      await refreshToken();
     }
     talker.debug('test finish');
   }
 
   Future<void> _autoSignIn(BuildContext context) async {
-    final signInSucceed = await signIn(
+    final signInSucceed = await login(
       state.emailOrUsername,
       state.password,
     );
@@ -122,11 +138,11 @@ class UserCubit extends HydratedCubit<UserState> {
     emit(const UserState.initial());
   }
 
-  Future<void> _renewToken() async {
+  Future<void> refreshToken() async {
     try {
-      final renewResponse = await apiClient.authService.getRenew();
-      final token = renewResponse?.body;
-      if (token == null || token.isEmpty) return;
+      final renewResponse = await authClient.refresh();
+      final token = renewResponse.body;
+      if (token.isEmpty) return;
       emit(state.copyWith(
         token: token,
         signInTime: DateTime.now(),

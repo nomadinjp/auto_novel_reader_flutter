@@ -103,7 +103,7 @@ class WenkuNovelTile extends StatelessWidget {
         padding: const EdgeInsets.all(4),
         height: 46,
         width: double.infinity,
-        color: styleManager.colorScheme(context).surface.withOpacity(0.8),
+        color: styleManager.colorScheme(context).surface.withValues(alpha: 0.8),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
           child: Text(

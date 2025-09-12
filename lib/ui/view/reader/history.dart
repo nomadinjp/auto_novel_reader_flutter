@@ -21,10 +21,23 @@ class HistoryView extends StatelessWidget {
       create: (context) => HistoryCubit(),
       child: readUserCubit(context).isSignIn
           ? const HistoryBody()
-          : const Center(
-              child: Text(
-              '未登录',
-            )),
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Center(
+                    child: Text(
+                  '🥺',
+                  style: TextStyle(fontSize: 98),
+                )),
+                Text(
+                  '未登录',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.grey.withAlpha(128),
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }

@@ -175,9 +175,8 @@ class _FavoredViewState extends State<FavoredView> {
         return state.token != null;
       },
       builder: (context, state) {
-        return !state
-            ? const Center(child: Text('未登录'))
-            : Stack(
+        return state
+            ? Stack(
                 children: [
                   FavoredBody(
                     refreshWeb: doRefreshWeb,
@@ -187,6 +186,23 @@ class _FavoredViewState extends State<FavoredView> {
                   ),
                   _buildFavoredSelector(context),
                   _buildAddFavoredButton(context),
+                ],
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Center(
+                      child: Text(
+                    '🥺',
+                    style: TextStyle(fontSize: 98),
+                  )),
+                  Text(
+                    '未登录',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.grey.withAlpha(128),
+                    ),
+                  ),
                 ],
               );
       },
@@ -359,7 +375,9 @@ class _FavoredViewState extends State<FavoredView> {
     cubit.setFavored(sortType: sortType, type: type, favored: favored);
     if (type == NovelType.web) {
       if (favored?.id == webFavoredData.favoredId &&
-          sortType == webFavoredData.sort) return;
+          sortType == webFavoredData.sort) {
+        return;
+      }
       webFavoredData = webFavoredData.copyWith(
         favoredId: favored?.id ?? webFavoredData.favoredId,
         sort: sortType ?? webFavoredData.sort,
@@ -367,7 +385,9 @@ class _FavoredViewState extends State<FavoredView> {
       doRefreshWeb();
     } else if (type == NovelType.wenku) {
       if (favored?.id == wenkuFavoredData.favoredId &&
-          sortType == wenkuFavoredData.sort) return;
+          sortType == wenkuFavoredData.sort) {
+        return;
+      }
       wenkuFavoredData = wenkuFavoredData.copyWith(
         favoredId: favored?.id ?? wenkuFavoredData.favoredId,
         sort: sortType ?? wenkuFavoredData.sort,

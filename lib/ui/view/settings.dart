@@ -25,7 +25,7 @@ class SettingsView extends StatelessWidget {
         backgroundColor: styleManager
             .colorScheme(context)
             .secondaryContainer
-            .withOpacity(0.5),
+            .withValues(alpha: 0.5),
       ),
       body: SingleChildScrollView(
         child: _buildOptions(theme, context),

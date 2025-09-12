@@ -250,10 +250,16 @@ class _EpubUtil {
     if (backup.existsSync()) {
       backup.deleteSync();
     }
-    final path3 = '${pathManager.parseDirPath}/${epubData.uid}';
-    final parseDir = Directory(path3);
+    final parseFile = '${pathManager.parseDirPath}/${epubData.uid}';
+    final parseDir = Directory(parseFile);
     if (parseDir.existsSync()) {
       parseDir.deleteSync(recursive: true);
+    }
+
+    final epubFile = '${pathManager.epubDownloadPath}/${epubData.filename}';
+    final epub = File(epubFile);
+    if (epub.existsSync()) {
+      epub.deleteSync();
     }
   }
 

@@ -105,7 +105,6 @@ class NovelRankBloc extends Bloc<NovelRankEvent, NovelRankState> {
         case RankCategory.kakuyomuGenre:
           await _loadKakuyomuGenre(state.kakuyomuGenreSearchData.query, emit);
           break;
-        default:
       }
     } catch (e, stackTrace) {
       errorLogger.logError(e, stackTrace);

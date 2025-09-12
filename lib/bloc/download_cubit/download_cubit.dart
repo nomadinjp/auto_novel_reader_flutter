@@ -46,9 +46,11 @@ class DownloadCubit extends HydratedCubit<DownloadState> {
     final downloadType = getDownloadType(filename);
     switch (downloadType) {
       case DownloadStatus.failed:
+      case DownloadStatus.deleted:
         showSucceedToast('已重新创建下载任务');
       case DownloadStatus.none:
         showSucceedToast('已创建下载任务');
+
       default:
         showWarnToast('请勿重复创建');
         return;
@@ -64,10 +66,15 @@ class DownloadCubit extends HydratedCubit<DownloadState> {
   }
 
   updateStatus(String filename, DownloadStatus status) {
-    emit(state.copyWith(taskStatus: {
-      ...state.taskStatus,
-      filename: status,
-    }));
+    try {
+      emit(state.copyWith(taskStatus: {
+        ...state.taskStatus,
+        filename: status,
+      }));
+    } catch (e) {
+      errorLogger.logError(e, StackTrace.current);
+      talker.error(e);
+    }
   }
 
   finishRedirect(String filename) {

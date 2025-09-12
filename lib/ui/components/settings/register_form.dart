@@ -3,9 +3,13 @@ import 'dart:async';
 import 'package:auto_novel_reader_flutter/network/api_client.dart';
 import 'package:auto_novel_reader_flutter/ui/components/settings/auth_tab.dart';
 import 'package:auto_novel_reader_flutter/ui/components/universal/custom_text_field.dart';
+import 'package:auto_novel_reader_flutter/ui/components/universal/line_button.dart';
 import 'package:auto_novel_reader_flutter/util/client_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+const registerUrl = 'https://n.novelia.cc/auth';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -50,6 +54,29 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Center(
+            child: Text(
+          '🚧',
+          style: TextStyle(fontSize: 128),
+        )),
+        const Text(
+          '施工中...',
+          style: TextStyle(fontSize: 32),
+        ),
+        const SizedBox(height: 20),
+        LineButton(
+          text: '点我去官网注册',
+          onPressed: () async {
+            launchUrl(Uri.parse(registerUrl));
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRegisterForm() {
     return Form(
       key: _formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,

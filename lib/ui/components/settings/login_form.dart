@@ -84,7 +84,7 @@ class _LoginFormState extends State<LoginForm> {
       setState(() {
         requesting = true;
       });
-      final isSignInSucceed = await readUserCubit(context).signIn(
+      final isSignInSucceed = await readUserCubit(context).login(
         _emailOrUsernameController.text,
         _passwordController.text,
       );

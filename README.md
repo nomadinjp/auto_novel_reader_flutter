@@ -2,6 +2,7 @@
 
 适配[轻小说机翻机器人](https://books.fishhawk.top/)的，完全面向阅读的第三方客户端, 内置了 epub 解析
 <del>名字绝对不是 neta 掌阅
+
 <div style="display: flex; justify-content: center; flex-wrap: wrap;">
     <img src="./.github/img/0.jpg" alt="Image 3" style="margin: 5px; width: 130px; height: auto;">
     <img src="./.github/img/1.jpg" alt="Image 1" style="margin: 5px; width: 130px; height: auto;">
@@ -15,12 +16,12 @@
 
 [Release](https://github.com/Prixii/auto_novel_reader_flutter/releases)
 
-
 # 📦 如何运行
 
 **代码生成**
 
 本项目使用了代码生成，运行之前需要 build
+
 ```
 $ flutter pub get
 $ dart run build_runner build
@@ -32,12 +33,13 @@ $ dart run build_runner build
 
 # ⚒️ 主要技术
 
-几乎完全使用 `BLoC` 进行状态管理，通过 WebView 对 epub 文件进行渲染 
+几乎完全使用 `BLoC` 进行状态管理，通过 WebView 对 epub 文件进行渲染
 
 # ❤️ 贡献
+
 由于仓主很忙，更新频率不会太高
 
-欢迎有能人士提交 Pr 喵😘
+欢迎有能人士提交 Pr 喵 😘
 
 如果有对于 app 的建议或发现了 Bug，也请提出 issue
 
@@ -50,9 +52,11 @@ $ dart run build_runner build
 - 弱网/无网状态下可能会出现一直加载的情况
   > 基本修复，部分页面可能疏忽了，如果遇到还请提 issue
 - 阅读 epub 文件的时候，滚动条和进度指示会出现抽搐
-  >目前的 epub 渲染方案在长文本的情况下，面临着流畅度和进度定位二选一的困境，epub 渲染方式后会解决
+  > 目前的 epub 渲染方案在长文本的情况下，面临着流畅度和进度定位二选一的困境，epub 渲染方式后会解决
 - epub 封面不正确
   > 由于 epub 文件本身并没有严格的规范，导致封面的定位可能有误，后期会更新设置封面功能
+- 部分 epub 解析失败
+  > 不知道为什么，可能是在绿站更新后 epub 的格式有一些新的改动
 
 **✈️ 在途更新计划**
 
@@ -64,8 +68,6 @@ $ dart run build_runner build
 - ui 升级
 - 论坛支持
 
-
 **😭 以下内容因为 Api 不支持，暂时无法实现**
 
 - 在小说详情之外的地方，显示上次阅读的章节
-

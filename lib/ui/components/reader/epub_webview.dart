@@ -143,7 +143,8 @@ class _EpubWebviewState extends State<EpubWebview> {
     } else {
       if (isDark) {
         final color = styleManager.colorScheme(context).onSurface;
-        stylesMap['color'] = 'rgb(${color.red},${color.green},${color.blue})';
+        stylesMap['color'] =
+            'rgb(${color.r * 255.0},${color.g * 255.0},${color.b * 255.0})';
       }
     }
     return stylesMap;
@@ -187,6 +188,7 @@ class _EpubWebviewState extends State<EpubWebview> {
   }
 
   Widget _buildChapterProgress() {
+    readProgress = readProgress.clamp(0.0, 1.0);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InfoBadge(
@@ -217,7 +219,7 @@ class _EpubWebviewState extends State<EpubWebview> {
                   height: maxHeight,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(radius),
-                    color: Colors.grey.withOpacity(0.5),
+                    color: Colors.grey.withValues(alpha: 0.5),
                   )),
               Container(
                 decoration: BoxDecoration(

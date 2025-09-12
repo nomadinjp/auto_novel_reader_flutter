@@ -2,7 +2,7 @@ part of 'service.dart';
 
 @ChopperApi(baseUrl: '/novel')
 abstract class WebNovelService extends ChopperService {
-  @Get(path: '')
+  @GET(path: '')
   Future<Response> getList(
     @Query() int page,
     @Query() int pageSize, {
@@ -14,40 +14,40 @@ abstract class WebNovelService extends ChopperService {
     @Query() String? query,
   });
 
-  @Get(path: '/rank/{providerId}')
+  @GET(path: '/rank/{providerId}')
   Future<Response> getRank(
     @Path() String providerId,
     @QueryMap() Map<String, String> query,
   );
 
-  @Get(path: '/{providerId}/{novelId}')
+  @GET(path: '/{providerId}/{novelId}')
   Future<Response> getNovelId(
       @Path() String providerId, @Path() String novelId);
 
-  @Get(path: '/{providerId}/{novelId}/chapter/{chapterId}')
+  @GET(path: '/{providerId}/{novelId}/chapter/{chapterId}')
   Future<Response> getChapter(@Path() String providerId, @Path() String novelId,
       @Path() String chapterId);
 
-  @Post(path: '/{providerId}/{novelId}')
+  @POST(path: '/{providerId}/{novelId}')
   Future<Response> _postNovelId(
       @Path() String providerId, @Path() String novelId);
   Future<Response?> postNovelId(String providerId, String novelId) =>
       tokenRequest(() => _postNovelId(providerId, novelId));
 
-  @Put(path: '/{providerId}/{novelId}/glossary')
+  @PUT(path: '/{providerId}/{novelId}/glossary')
   Future<Response> _putGlossary(
       @Path() String providerId, @Path() String novelId);
   Future<Response?> putGlossary(String providerId, String novelId) =>
       tokenRequest(() => _putGlossary(providerId, novelId));
 
-  @Get(path: '/{providerId}/{novelId}/translate-v2/{translatorId}')
+  @GET(path: '/{providerId}/{novelId}/translate-v2/{translatorId}')
   Future<Response> _getTranslateV2(@Path() String providerId,
       @Path() String novelId, @Path() String translatorId);
   Future<Response?> getTranslateV2(
           String providerId, String novelId, String translatorId) =>
       tokenRequest(() => _getTranslateV2(providerId, novelId, translatorId));
 
-  @Post(
+  @POST(
       path:
           '/{providerId}/{novelId}/translate-v2/{translatorId}/chapter-task/{chapterId}')
   Future<Response> _postTranslateV2Task(
@@ -60,7 +60,7 @@ abstract class WebNovelService extends ChopperService {
       tokenRequest(() =>
           _postTranslateV2Task(providerId, novelId, translatorId, chapterId));
 
-  @Post(path: '/{providerId}/{novelId}/translate-v2/{translatorId}/metadata')
+  @POST(path: '/{providerId}/{novelId}/translate-v2/{translatorId}/metadata')
   Future<Response> _postTranslateV2Metadata(@Path() String providerId,
       @Path() String novelId, @Path() String translatorId);
   Future<Response?> postTranslateV2Metadata(
@@ -68,7 +68,7 @@ abstract class WebNovelService extends ChopperService {
       tokenRequest(
           () => _postTranslateV2Metadata(providerId, novelId, translatorId));
 
-  @Post(
+  @POST(
       path:
           '/{providerId}/{novelId}/translate-v2/{translatorId}/chapter/{chapterId}')
   Future<Response> _postChapter(
@@ -81,7 +81,7 @@ abstract class WebNovelService extends ChopperService {
       tokenRequest(
           () => _postChapter(providerId, novelId, translatorId, chapterId));
 
-  @Get(path: '/{providerId}/{novelId}/file')
+  @GET(path: '/{providerId}/{novelId}/file')
   Future<Response> getFile(@Path() String providerId, @Path() String novelId);
 
   static WebNovelService create([ChopperClient? client]) =>

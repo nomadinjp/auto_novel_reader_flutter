@@ -129,3 +129,13 @@ String formatTimestamp(int timestamp) {
     return '${(difference.inDays / 365).floor()}年前';
   }
 }
+
+String? extractRefreshToken(String cookie) {
+  // 正则匹配 refresh-token=xxx; 形式
+  final regex = RegExp(r'refresh-token=([^;]+)');
+  final match = regex.firstMatch(cookie);
+  if (match != null && match.groupCount >= 1) {
+    return match.group(1);
+  }
+  return null;
+}

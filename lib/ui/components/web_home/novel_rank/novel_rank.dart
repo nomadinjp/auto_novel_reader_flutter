@@ -139,9 +139,13 @@ class _NovelRankState extends State<NovelRank>
           padding: const EdgeInsets.all(12.0),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.0),
-              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.15))],
-              color:
-                  styleManager.colorScheme(context).surface.withOpacity(0.6)),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withValues(alpha: 0.15))
+              ],
+              color: styleManager
+                  .colorScheme(context)
+                  .surface
+                  .withValues(alpha: 0.6)),
           child: filterList[currentIndex],
         ),
       ),

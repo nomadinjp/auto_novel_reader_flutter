@@ -21,7 +21,23 @@ class LocalBookView extends StatelessWidget {
         },
         builder: (context, epubList) {
           if (epubList.isEmpty) {
-            return const Center(child: Text('没有书籍哦~'));
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Center(
+                    child: Text(
+                  '🤔',
+                  style: TextStyle(fontSize: 98),
+                )),
+                Text(
+                  '没有书籍哦',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.grey.withAlpha(128),
+                  ),
+                ),
+              ],
+            );
           }
           return EpubBookList(
             epubList: epubList,

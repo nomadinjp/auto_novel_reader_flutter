@@ -2,11 +2,11 @@ part of 'service.dart';
 
 @ChopperApi(baseUrl: '/user')
 abstract class UserService extends ChopperService {
-  @Get(path: '')
+  @GET(path: '')
   Future<Response> _getUser();
   Future<Response?> getUser() => tokenRequest(() => _getUser());
 
-  @Get(path: '/favored')
+  @GET(path: '/favored')
   Future<Response> _getFavored();
   Future<Response?> getFavored() => tokenRequest(() => _getFavored());
 
