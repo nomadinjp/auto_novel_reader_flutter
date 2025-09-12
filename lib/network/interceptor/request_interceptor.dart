@@ -14,11 +14,10 @@ class RequestInterceptor implements Interceptor {
       return chain.proceed(chain.request);
     }
 
-    final request = applyHeader(
-      chain.request,
-      'Authorization',
-      'Bearer $token',
-    );
+    var request = chain.request;
+    if (token != null && token.isNotEmpty) {
+      request = request.copyWith(headers: {'Authorization': 'Bearer $token'});
+    }
 
     kDebugMode
         ? talker.info(

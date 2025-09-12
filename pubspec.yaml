@@ -37,16 +37,16 @@ dependencies:
   freezed_annotation: ^2.4.1
   json_annotation: ^4.9.0
   # 状态管理
-  bloc: ^8.1.4
+  bloc: ^9.0.0
   flutter_bloc:
-    ^8.1.6
+    ^9.1.1
     # 动画
   animations: ^2.0.11
   flutter_staggered_animations: ^1.0.0
   # 持久化
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  hydrated_bloc: ^9.1.5
+  hydrated_bloc: ^10.1.1
   # 网络图片
   cached_network_image: ^3.4.1
   # jwt

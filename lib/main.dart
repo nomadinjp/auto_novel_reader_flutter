@@ -14,7 +14,9 @@ Future<void> main() async {
 
 Future<void> initHydratedStorage() async {
   HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: await getApplicationDocumentsDirectory(),
+    storageDirectory: HydratedStorageDirectory(
+      (await getTemporaryDirectory()).path,
+    ),
   );
 }
 
