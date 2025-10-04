@@ -12,6 +12,8 @@ part 'global_bloc.freezed.dart';
 part 'global_event.dart';
 part 'global_state.dart';
 
+const DISABLE_UPDATE = true;
+
 class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
   GlobalBloc() : super(const _Initial()) {
     on<GlobalEvent>((event, emit) async {
@@ -29,6 +31,8 @@ class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
   }
 
   _onCheckUpdate(_CheckUpdate event, Emitter<GlobalState> emit) async {
+    if (DISABLE_UPDATE) return;
+
     late final PackageInfo packageInfo;
     late final ReleaseData? latestReleaseData;
     await Future.wait([
