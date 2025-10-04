@@ -55,6 +55,7 @@ dependencies:
   url_launcher: ^6.3.0
   package_info_plus: ^8.0.2
   wakelock_plus: ^1.2.8
+  downloadsfolder: ^1.1.0
 
   #  env
   envied: ^1.2.1
